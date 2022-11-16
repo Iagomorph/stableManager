@@ -7,9 +7,8 @@ import 'pages/cavaliers.dart';
 import 'pages/login.dart';
 import 'pages/signup.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await MongoDataBase.connect();
+void main() {
+  MongoDataBase.connect();
   runApp(const MyApp());
 }
 

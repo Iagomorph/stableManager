@@ -1,7 +1,8 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-
-// import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'mongodb.dart';
+import 'eventClass.dart';
 
 class EvenementsForm extends StatefulWidget {
   static const tag = "evenementsform";
@@ -16,10 +17,11 @@ class _NewEvenement extends State<EvenementsForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Nouvel évènement"),
-        ),
-        body: FormNewEvenement());
+      appBar: AppBar(
+        title: const Text("Nouvel évènement"),
+      ),
+      body: FormNewEvenement()
+    );
   }
 }
 
@@ -53,16 +55,9 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   bool showImgField = false;
   bool showOrgaField = false;
 
-  void _sendNewEvent(context) {
-    MongoDataBase.addEvent(
-        _eventType,
-        nomController.text,
-        descController.text,
-        dateController.text,
-        imgController.text,
-        terrainController.text,
-        disciplineController.text,
-        orgaController.text);
+  void _sendNewEvent(){
+    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending');
+    MongoDataBase.addEvent(event);
   }
 
   @override
@@ -279,8 +274,22 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                     },
                     child: const Text('Submit'),
                   ),
-                ),
-              ])),
+                  Visibility(visible: showImgField, child: SizedBox(height: 25.0,)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false otherwise.
+                        if (_formKey.currentState!.validate()) {
+                          _sendNewEvent();
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ),
+                ]
+            )
+          ),
         ],
       ),
     );

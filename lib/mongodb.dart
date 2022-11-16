@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'eventClass.dart';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -18,8 +19,9 @@ class MongoDataBase {
     print(status);
     collection = db.collection(COLLECTION_NAME);
     eventCollection = db.collection(EVENT_COLLECTION_NAME);
+    print('connect appelé');
   }
-
+    
   static addUser(User user) async {
     await collection?.insertOne({
       'name': user.name,
@@ -56,6 +58,7 @@ class MongoDataBase {
     return usersList;
   }
 
+
   static getUserByToken(token) async {
     var user = await collection?.findOne(where.eq("token", token));
     return user;
@@ -68,20 +71,23 @@ class MongoDataBase {
         where.eq('name', username).and(where.eq('mail', mail)),
         modify.set('password', password));
   }
-
-  static addEvent(
-      type, name, desc, date, img, terrain, discipline, organisateur) async {
+  static addEvent(Event event) async {
     await eventCollection?.insertOne({
-      'type': type,
-      'name': name,
-      'desc': desc,
-      'date': date,
-      'img': img,
-      'terrain': terrain,
-      'discipline': discipline,
-      'organisateur': organisateur
+      'type':event.type,
+      'name':event.name,
+      'desc':event.desc,
+      'date':event.date,
+      'img':event.img,
+      'terrain':event.terrain,
+      'discipline':event.discipline,
+      'organisateur':event.organisateur,
+      'status':event.status,
     });
 
-    print("addEvent appelé.");
+    print("addEvent appelé");
   }
+
+  /*static getEvents() async {
+    await
+  }*/
 }
