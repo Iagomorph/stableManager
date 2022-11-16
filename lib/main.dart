@@ -16,22 +16,7 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-// class CustomRoute<T> extends MaterialPageRoute<T> {
-//   CustomRoute({ WidgetBuilder builder, RouteSettings settings })
-//       : super(builder: builder, settings: settings);
-//
-//   @override
-//   Widget buildTransitions(BuildContext context,
-//       Animation<double> animation,
-//       Animation<double> secondaryAnimation,
-//       Widget child) {
-//       return child;
-//   }
-// }
-
-
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   // This widget is the root of your application.
