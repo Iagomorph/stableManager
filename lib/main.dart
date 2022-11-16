@@ -52,24 +52,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
       appBar: AppBar(
         title: Text(widget.title),
-
-        actions: [
-          FloatingActionButton(
-            tooltip: "sign up",
-            heroTag: "btnSignUp",
-
-            onPressed: () =>{
-            Navigator.pushNamed(context, Signup.tag)
-          },
-            child: Icon(Icons.person_add),
-          ),
-          FloatingActionButton(onPressed: ()=>{
-            Navigator.pushNamed(context, Login.tag)
-          },
-            child: Icon(Icons.person),
-          tooltip: "Login",
-          heroTag: "btnLogin",)
-        ],
+        // actions: [
+        //   FloatingActionButton(
+        //     tooltip: "sign up",
+        //     heroTag: "btnSignUp",
+        //
+        //     onPressed: () =>{
+        //     Navigator.pushNamed(context, Signup.tag)
+        //   },
+        //     child: Icon(Icons.person_add),
+        //   ),
+        //   FloatingActionButton(onPressed: ()=>{
+        //     Navigator.pushNamed(context, Login.tag)
+        //   },
+        //     child: Icon(Icons.person),
+        //   tooltip: "Login",
+        //   heroTag: "btnLogin",)
+        // ],
       ),
 
 

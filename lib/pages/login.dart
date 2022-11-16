@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stable_manager/main.dart';
 
 import 'package:stable_manager/mongodb.dart';
+import 'package:stable_manager/obj/UserManager.dart';
 import '../main.dart';
 
 import '../obj/User.dart';
@@ -92,6 +93,9 @@ class _MyLoginState extends State<Login>{
                     if (user.name == name && user.password == pwd){
                       print("kekl");
                       User loggedUser = user;
+                      //UserManager.user stock les infos de l'utilisateur connecté
+                      //si le login est ok
+                      UserManager.user = loggedUser;
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Marie Ecurie',)));
                     }
                   });
