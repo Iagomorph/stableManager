@@ -4,6 +4,7 @@ import 'package:stable_manager/evenements.dart';
 import 'mongodb.dart';
 
 void main() {
+  MongoDataBase.connect();
   runApp(const MyApp());
 }
 

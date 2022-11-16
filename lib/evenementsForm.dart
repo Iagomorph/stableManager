@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'mongodb.dart';
+import 'eventClass.dart';
 
 class EvenementsForm extends StatefulWidget{
   static const tag = "evenementsform";
@@ -15,7 +15,7 @@ class _NewEvenement extends State<EvenementsForm>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nouvel évènement"),
+        title: const Text("Nouvel évènement"),
       ),
       body: FormNewEvenement()
     );
@@ -50,17 +50,9 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   bool showImgField = false;
   bool showOrgaField = false;
 
-  void _sendNewEvent(context){
-    MongoDataBase.addEvent(
-      _eventType,
-      nomController.text,
-      descController.text,
-      dateController.text,
-      imgController.text,
-      terrainController.text,
-      disciplineController.text,
-      orgaController.text
-    );
+  void _sendNewEvent(){
+    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending');
+    MongoDataBase.addEvent(event);
   }
 
   @override
@@ -255,8 +247,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
-                          _sendNewEvent(context);
-                          print('hi');
+                          _sendNewEvent();
                         }
                       },
                       child: const Text('Submit'),

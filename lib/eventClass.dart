@@ -20,10 +20,4 @@ class Event {
     this.organisateur,
     this.status
   );
-
-  toJson() async {
-    return ({
-
-    });
-  }
 }

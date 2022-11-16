@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'eventClass.dart';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -15,33 +16,26 @@ class MongoDataBase {
     eventCollection = db.collection(EVENT_COLLECTION_NAME);
     print(await collection?.find().toList());
 
-    await eventCollection?.insertOne({
-      'type':'soiree',
-      'name':'bal',
-      'desc':'dansant',
-      'date':'10010101',
-      'img':'img',
-      'terrain':'',
-      'discipline':'',
-      'organisateur':'léo',
-      'status':'pending'
-    });
-
-    print('hello');
+    print('connect appelé');
   }
 
-  static addEvent(type,name,desc,date,img,terrain,discipline,organisateur) async {
+  static addEvent(Event event) async {
     await eventCollection?.insertOne({
-      'type':type,
-      'name':name,
-      'desc':desc,
-      'date':date,
-      'img':img,
-      'terrain':terrain,
-      'discipline':discipline,
-      'organisateur':organisateur
+      'type':event.type,
+      'name':event.name,
+      'desc':event.desc,
+      'date':event.date,
+      'img':event.img,
+      'terrain':event.terrain,
+      'discipline':event.discipline,
+      'organisateur':event.organisateur,
+      'status':event.status,
     });
 
-    print("addEvent appelé.");
+    print("addEvent appelé");
   }
+
+  /*static getEvents() async {
+    await
+  }*/
 }
