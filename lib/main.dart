@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() {
+import 'login.dart';
+import 'obj/User.dart';
+import 'signup.dart';
+import 'mongodb.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoDataBase.connect();
   runApp(const MyApp());
 }
 
@@ -15,6 +22,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        Signup.tag: (context)=>const Signup(),
+        Login.tag: (context)=> const Login(),
+      },
+      debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: 'Stable Manager'),
     );
   }
@@ -33,17 +45,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+
       appBar: AppBar(
         title: Text(widget.title),
+
+        actions: [
+          FloatingActionButton(
+            tooltip: "sign up",
+            heroTag: "btnSignUp",
+
+            onPressed: () =>{
+            Navigator.pushNamed(context, Signup.tag)
+          },
+            child: Icon(Icons.person_add),
+          ),
+          FloatingActionButton(onPressed: ()=>{
+            Navigator.pushNamed(context, Login.tag)
+          },
+            child: Icon(Icons.person),
+          tooltip: "Login",
+          heroTag: "btnLogin",)
+        ],
       ),
 
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
+
+
     );
   }
 }
