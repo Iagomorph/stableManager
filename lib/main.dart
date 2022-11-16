@@ -23,11 +23,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      routes: {Evenements.tag: (context) => const Evenements()},
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       routes: {
+        Evenements.tag: (context) => const Evenements(),
         Signup.tag: (context)=>const Signup(),
         Login.tag: (context)=> const Login(),
       },
@@ -75,63 +75,64 @@ class _MyHomePageState extends State<MyHomePage> {
         // ],
       ),
 
-      body: Center(
-        child: (
-          /*GridButton(
-            onPressed: (var test) {
-              print('test');
-            },
-            items: const [
-              [
-                GridButtonItem(title: "Actus", color: Colors.yellow, flex: 1),
-                GridButtonItem(title: "Cours"),
-              ],
-              [
-                GridButtonItem(title: "Evenements", value: "100", flex: 3),
-              ],
-              [
-                GridButtonItem(title: "Cavaliers/Chevaux", value: "100", flex: 1),
-              ],
-            ]
-          )*/
-            Column(
-              children: [
-                TextButton(onPressed: /*() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Actus()),
-                  );}*/
-                  _test
-                      ,child: Text('Actus')),
-                TextButton(onPressed: /*() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Cours()),
-                  );}*/
-                _test
-                    ,child: Text('Cours')),
-                TextButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Evenements()),
-                  );}
-                    ,child: Text('Evenements')),
-                TextButton(onPressed: /*() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Actus()),
-                  );}*/
-                _test
-                    ,child: Text('Cavaliers')),
-              ]
-            )
-        ),
+          // GridButton(
+          //   onPressed: (var test) {
+          //     print('test');
+          //   },
+          //   items: const [
+          //     [
+          //       GridButtonItem(title: "Actus", color: Colors.yellow, flex: 1),
+          //       GridButtonItem(title: "Cours"),
+          //     ],
+          //     [
+          //       GridButtonItem(title: "Evenements", value: "100", flex: 3),
+          //     ],
+          //     [
+          //       GridButtonItem(title: "Cavaliers/Chevaux", value: "100", flex: 1),
+          //     ],
+          //   ]
+          // )
+        //     Column(
+        //       children: [
+        //         TextButton(onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => const Actus()),
+        //           );}
+        //           _test
+        //               ,child: Text('Actus')),
+        //
+        //         TextButton(onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => const Cours()),
+        //           );}
+        //         _test
+        //             ,child: Text('Cours')),
+        //
+        //         TextButton(onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => const Evenements()),
+        //           );}
+        //             ,child: Text('Evenements')),
+        //
+        //         TextButton(onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => const Actus()),
+        //           );}
+        //         _test
+        //             ,child: Text('Cavaliers')),
+        //       ]
+        //     )
+        // ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed
       //   tooltip: 'Increment',
       //   child: const Icon(Icons.add),
       // ),
-      )
+
     );
   }
 }
