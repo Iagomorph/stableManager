@@ -5,17 +5,20 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'constant.dart';
 import 'obj/User.dart';
 
-
 class MongoDataBase {
   static DbCollection? collection;
+  static DbCollection? eventCollection;
+
 
   static connect() async {
     var db = await Db.create(MONGO_URL);
     await db.open();
+
     inspect(db);
     var status = db.serverStatus();
     print(status);
     collection = db.collection(COLLECTION_NAME);
+    eventCollection = db.collection(EVENT_COLLECTION_NAME);
   }
 
   static addUser(User user) async {
@@ -66,5 +69,23 @@ class MongoDataBase {
     var mail = user.mail;
     await collection?.update(where.eq('name',username).and(where.eq('mail', mail)),
         modify.set('password', password));
+    }
+
+
+
+  static addEvent(type,name,desc,date,img,terrain,discipline,organisateur) async {
+    await eventCollection?.insertOne({
+      'type':type,
+      'name':name,
+      'desc':desc,
+      'date':date,
+      'img':img,
+      'terrain':terrain,
+      'discipline':discipline,
+      'organisateur':organisateur
+    });
+
+    print("addEvent appelé.");
+
   }
 }
