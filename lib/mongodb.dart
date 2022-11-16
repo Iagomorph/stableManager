@@ -101,9 +101,16 @@ class MongoDataBase {
       String organisateur = item["organisateur"];
       String status = item["status"];
 
-      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status);
-
-      eventsList.add(event);
+  static addEvent(event) async {
+    await eventCollection?.insertOne({
+      'type':event.type,
+      'name':event.name,
+      'desc':event.desc,
+      'date':event.date,
+      'img':event.img,
+      'terrain':event.terrain,
+      'discipline':event.discipline,
+      'organisateur':event.organisateur
     });
 
     print(eventsList);

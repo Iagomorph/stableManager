@@ -46,7 +46,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   final disciplineController = TextEditingController();
   final orgaController = TextEditingController();
 
-  String _eventType = "soiree";
+  String _eventType = '';
 
   bool showCoursField = false;
   bool showImgField = true;
@@ -230,9 +230,56 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                     },
                     child: const Text('Submit'),
                   ),
-                ),
-              ]
-          )
+                  Visibility(visible: showCoursField, child: SizedBox(height: 25.0,)),
+                  Visibility(
+                    visible: showOrgaField,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Organisateur de la soirée"
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Veuillez entrer un nom valide.';
+                        }
+                        return null;
+                      },
+                      controller: orgaController,
+                    ),
+                  ),
+                  Visibility(visible: showOrgaField, child: SizedBox(height: 25.0,)),
+                  Visibility(
+                    visible: showImgField,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Illustration du post de l'évènement"
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Veuillez entrer un lien valide.';
+                        }
+                        return null;
+                      },
+                      controller: imgController,
+                    ),
+                  ),
+                  Visibility(visible: showImgField, child: SizedBox(height: 25.0,)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false otherwise.
+                        if (_formKey.currentState!.validate()) {
+                          _sendNewEvent();
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ),
+                ]
+            )
+          ),
         ],
       ),
     );
