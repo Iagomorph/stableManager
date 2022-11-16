@@ -55,11 +55,16 @@ class MongoDataBase {
     return usersList;
   }
 
-
-
   static getUserByToken(token) async {
     var user = await collection?.findOne(
       where.eq("token", token));
     return user;
+  }
+
+  static updateUserPassword(User user, String password) async{
+    var username = user.name;
+    var mail = user.mail;
+    await collection?.update(where.eq('name',username).and(where.eq('mail', mail)),
+        modify.set('password', password));
   }
 }
