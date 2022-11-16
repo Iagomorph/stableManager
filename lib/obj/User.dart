@@ -22,7 +22,8 @@ class User {
 
   User(this.name, this.mail, this.password, this.picture, this.token, this.isOwner, this.type);
 
-  toJson(Map<String, dynamic> json){
-    return User(json['name'], json['mail'],json['password'], json['picture'], json['token'], json[isOwner], this.type);
+  fromJson(Map<String, dynamic> json){
+    print(json);
+    return User(json['name'], json['mail'],json['password'], json['picture'], json['token'], json['isOwner'], json['type']);
   }
 }

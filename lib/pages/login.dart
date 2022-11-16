@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:stable_manager/main.dart';
 
 import 'package:stable_manager/mongodb.dart';
+import '../main.dart';
 
-import 'obj/User.dart';
+import '../obj/User.dart';
+import 'signup.dart';
+
 
 class Login extends StatefulWidget {
   static const tag = "login";
@@ -82,12 +86,18 @@ class _MyLoginState extends State<Login>{
 
                   Users.forEach((user) {
                     if (user.name == name && user.password == pwd){
+                      print("kekl");
                       User loggedUser = user;
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Marie Ecurie',)));
                     }
                   });
                 },
-                  child: const Text("Sign Up"),
+                  child: const Text("Connectez-vous"),
                 ),
+
+                ElevatedButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Signup()));
+                }, child: const Text('Inscrivez-vous'))
               ],
             ),
           ),

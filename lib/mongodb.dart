@@ -31,15 +31,31 @@ class MongoDataBase {
   }
 
   static getUsers() async {
-    var usersJson = await collection?.find().toList();
-    print(usersJson);
-    List<User> users = [];
-    User user = User("","","","","",false,"");
-    usersJson?.forEach((e){
-      users.add(user.toJson(e));
-    });
-    return users;
+    //liste des bails en bdd format json
+    var users = await collection?.find().toList();
+    //liste vide
+    List<User> usersList = [];
+    //on fait un forEach dans la liste json
+    users?.forEach((item) {
+      //on extrait les éléments du json dans des variables
+      String name = item["name"];
+      String mail = item["mail"];
+      String pwd = item["password"];
+      String img = item["image"];
+      String token = item["token"];
+      bool isOwner = item["isOwner"];
+      String type = item["type"];
+      //on crée un objet à partir des variables extraites du json
+      final user = User(name,mail,pwd,img,token,isOwner,type);
+      //on ajoute l'objet à la liste vide
+      usersList.add(user);
+      }
+    );
+    //on retourne la liste
+    return usersList;
   }
+
+
 
   static getUserByToken(token) async {
     var user = await collection?.findOne(

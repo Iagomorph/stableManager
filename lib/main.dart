@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
+import 'pages/login.dart';
 import 'obj/User.dart';
-import 'signup.dart';
 import 'mongodb.dart';
+import 'pages/signup.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +12,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -27,12 +28,13 @@ class MyApp extends StatelessWidget {
         Login.tag: (context)=> const Login(),
       },
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Stable Manager'),
+      home: const Login(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  static const tag = "home";
   const MyHomePage({super.key, required this.title});
 
   final String title;
@@ -42,6 +44,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
 
   @override
   Widget build(BuildContext context) {

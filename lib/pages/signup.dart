@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stable_manager/mongodb.dart';
+import 'package:stable_manager/obj/User.dart';
 
-import 'obj/User.dart';
 
 class Signup extends StatefulWidget {
   static const tag = "signup";
