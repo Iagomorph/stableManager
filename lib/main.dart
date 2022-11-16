@@ -3,8 +3,9 @@ import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:stable_manager/evenements.dart';
 import 'mongodb.dart';
 
-void main() {
-  MongoDataBase.connect();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoDataBase.connect();
   runApp(const MyApp());
 }
 
