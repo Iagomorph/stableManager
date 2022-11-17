@@ -20,12 +20,12 @@ class _HomePageState extends State<HomePage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.person, color: Colors.black),
-              const Padding(
+            children: const [
+              Icon(Icons.person, color: Colors.black),
+              Padding(
                   padding:
                   EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
-              const Text('Username', style: TextStyle(color: Colors.black, fontSize: 18)),
+              Text('Username', style: TextStyle(color: Colors.black, fontSize: 18)),
             ],
           )),
       body: Column(

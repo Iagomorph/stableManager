@@ -4,24 +4,17 @@ import '../model/user.dart';
 import 'constant.dart';
 
 class MongoDatabase {
-  static var db, cavalierCollection, chevalcollection, usercollection;
+  static var db, usercollection;
   static connect() async {
     db = await Db.create(MONGO_URL);
     await db.open();
     inspect(db);
-    cavalierCollection = db.collection(COLLECTION_CAVALIER);
-    chevalcollection = db.collection(COLLECTION_CHEVAL);
     usercollection = db.collection(COLLECTION_USER);
 
   }
 
   static Future<List<Map<String,dynamic>>> getUsers() async {
     final arrData = await usercollection.find().toList();
-    return arrData;
-  }
-
-  static Future<List<Map<String,dynamic>>> getCheval() async {
-    final arrData = await chevalcollection.find().toList();
     return arrData;
   }
 

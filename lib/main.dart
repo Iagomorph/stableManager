@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stable_manager/page/list.dart';
-import 'page/homepage.dart';
 import 'page/listDb.dart';
 import 'database/mongodb.dart';
 
@@ -22,8 +20,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: HomePage(),
-      // home: ListPage(),
       home: ListDbView(),
+      // home: ListPage(),
       // home: GenerateRand(),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/user.dart';
 import '../database/mongodb.dart';
-import '../model/cheval.dart';
 
 class ListDbView extends StatefulWidget {
   const ListDbView({Key? key}) : super(key: key);
@@ -18,8 +17,7 @@ class _ListDbViewState extends State<ListDbView> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: FutureBuilder(
-              // future: MongoDatabase.getUsers(),
-              future: MongoDatabase.getCheval(),
+              future: MongoDatabase.getUsers(),
               builder: (context, AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -33,8 +31,7 @@ class _ListDbViewState extends State<ListDbView> {
                         itemCount:snapshot.data.length,
                         itemBuilder: (context, index){
                           return displayCard(
-                              // User.fromJson(snapshot.data[index]));
-                              Cheval.fromJson(snapshot.data[index]));
+                              User.fromJson(snapshot.data[index]));
                         }
                         );
                   }else{
@@ -48,25 +45,7 @@ class _ListDbViewState extends State<ListDbView> {
           ),
         )
     );
-  // Widget displayCard(User data) {
-  //   return Card(
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(10.0),
-  //       child: Column(
-  //         children: [
-  //           Text("${data.id}"),
-  //           const SizedBox(height: 5,),
-  //           Text(data.name),
-  //           const SizedBox(height: 5,),
-  //           Text(data.mail),
-  //           const SizedBox(height: 5,),
-  //           Text("${data.age}"),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-  Widget displayCard(Cheval data) {
+  Widget displayCard(User data) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -74,11 +53,13 @@ class _ListDbViewState extends State<ListDbView> {
           children: [
             Text("${data.id}"),
             const SizedBox(height: 5,),
-            Text(data.photo),
-            const SizedBox(height: 5,),
             Text(data.name),
             const SizedBox(height: 5,),
-            Text("${data.age}"),
+            Text(data.mail),
+            const SizedBox(height: 5,),
+            Text(data.image),
+            const SizedBox(height: 5,),
+            Text(data.type),
           ],
         ),
       ),

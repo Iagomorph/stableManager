@@ -1,29 +1,27 @@
 import 'package:mongo_dart/mongo_dart.dart';
 
-import 'cheval.dart';
-
 class User {
   User({
     required this.id,
     required this.name,
     required this.mail,
-    required this.age,
-    // required this.cheval,
+    required this.image,
+    required this.type,
   });
 
   ObjectId id;
   String name;
   String mail;
-  int age;
-  // List<Cheval> cheval;
+  String image;
+  String type;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
         id: json['_id'],
         name: json['name'],
         mail: json['mail'],
-        age: json['age'],
-        // cheval: List<Cheval>.from(json["cheval"])
+        image: json['image'],
+        type: json['type'],
     );
   }
 }
