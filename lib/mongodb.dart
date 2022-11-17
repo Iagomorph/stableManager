@@ -35,7 +35,27 @@ class MongoDataBase {
     print("addEvent appelé");
   }
 
-  /*static getEvents() async {
-    await
-  }*/
+  static getEvents() async{
+    var events = await eventCollection?.find().toList();
+    List eventsList = [];
+    events?.forEach((item) {
+      String type = item["type"];
+      String name = item["name"];
+      String desc = item["desc"];
+      String date = item["date"];
+      String img = item["img"];
+      String terrain = item["terrain"];
+      String discipline = item["discipline"];
+      String organisateur = item["organisateur"];
+      String status = item["status"];
+
+      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status);
+
+      eventsList.add(event);
+    });
+
+    print(eventsList);
+    print(eventsList[0].name);
+    return eventsList;
+  }
 }
