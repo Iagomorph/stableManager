@@ -48,32 +48,61 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
 
+void _onItemTapped(int index){
+  setState(() {
+    _selectedIndex = index;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: AppBar(
+      appBar :AppBar(
         title: Text(widget.title),
-        // actions: [
-        //   FloatingActionButton(
-        //     tooltip: "sign up",
-        //     heroTag: "btnSignUp",
-        //
-        //     onPressed: () =>{
-        //     Navigator.pushNamed(context, Signup.tag)
-        //   },
-        //     child: Icon(Icons.person_add),
-        //   ),
-        //   FloatingActionButton(onPressed: ()=>{
-        //     Navigator.pushNamed(context, Login.tag)
-        //   },
-        //     child: Icon(Icons.person),
-        //   tooltip: "Login",
-        //   heroTag: "btnLogin",)
-        // ],
       ),
+      //FIN DE L'APPBAR MERCI DE METTRE VOTRE CODE SOUS CE MSG ET AU DESSUS DE LA NAVBAR DU BAS
+
+
+
+
+      //NAVBAR DU BAS MERCI DE METTRE VOTRE CODE AU DESSUS DE CA ET SOUS L'APPBAR
+          bottomNavigationBar : BottomNavigationBar(
+            items: const<BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.newspaper,),
+                  label: 'Actus',
+                backgroundColor: Colors.lightBlueAccent,
+              ),
+
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person,),
+                  label: 'Profil',
+                backgroundColor: Colors.lightBlueAccent,
+
+              ),
+
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.event,),
+                  label: "Evènements",
+                backgroundColor: Colors.lightBlueAccent,
+
+              ),
+
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.people,),
+                  label: "Cavaliers",
+                backgroundColor: Colors.blue,
+              )
+            ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          selectedItemColor: Colors.amber,
+          ),
+    );
+
 
           // GridButton(
           //   onPressed: (var test) {
@@ -133,6 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
       //   child: const Icon(Icons.add),
       // ),
 
-    );
+
   }
 }

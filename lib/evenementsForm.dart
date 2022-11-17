@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+// import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'mongodb.dart';
 
 class EvenementsForm extends StatefulWidget{
@@ -97,44 +97,44 @@ class FormNewEvenementState extends State<FormNewEvenement> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DropDownFormField(
-            titleText: "Type d'évènement",
-            hintText: 'Veuillez choisir un type',
-            value: _eventType,
-            onSaved: (value) {
-              setState(() {
-                _eventTypeResult = value;
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                _eventType = value;
-                checkFieldVisibility();
-              });
-            },
-            dataSource: const [
-              {
-                "display": "Soirée",
-                "value": "soiree",
-              },
-              {
-                "display": "Cours",
-                "value": "cours",
-              },
-              {
-                "display": "Compétition",
-                "value": "competition",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
-            validator: (value) {
-              if (value == '') {
-                return 'Please select an option';
-              }
-              return null;
-            },
-          ),
+          // DropDownButtonFormField(
+          //   titleText: "Type d'évènement",
+          //   hintText: 'Veuillez choisir un type',
+          //   value: _eventType,
+          //   onSaved: (value) {
+          //     setState(() {
+          //       _eventTypeResult = value;
+          //     });
+          //   },
+          //   onChanged: (value) {
+          //     setState(() {
+          //       _eventType = value;
+          //       checkFieldVisibility();
+          //     });
+          //   },
+          //   dataSource: const [
+          //     {
+          //       "display": "Soirée",
+          //       "value": "soiree",
+          //     },
+          //     {
+          //       "display": "Cours",
+          //       "value": "cours",
+          //     },
+          //     {
+          //       "display": "Compétition",
+          //       "value": "competition",
+          //     },
+          //   ],
+          //   textField: 'display',
+          //   valueField: 'value',
+          //   validator: (value) {
+          //     if (value == '') {
+          //       return 'Please select an option';
+          //     }
+          //     return null;
+          //   },
+          // ),
           SizedBox(height: 25.0),
           Visibility(visible: showForm,
               child: Column(
