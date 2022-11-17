@@ -173,7 +173,9 @@ class _MyLoginState extends State<Login>{
                           Users.forEach((user) async {
                           if (user.name == username && user.mail == mail){
                             await MongoDataBase.updateUserPassword(user, newPwd);
+                            UserManager.user = user;
                             Navigator.pop(context);
+                          } else {
                           }
                           });
                           }, child: Text("Changer le mot de passe"))
