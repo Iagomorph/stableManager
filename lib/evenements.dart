@@ -43,6 +43,33 @@ class _AllEvenements extends State<Evenements> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  _imgBool(type){
+    if(type == "cours"){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  _orgaBool(type){
+    if(type == "soiree"){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  _coursBool(type){
+    if(type == "cours"){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
