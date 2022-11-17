@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'mongodb.dart';
 import 'eventClass.dart';
 
@@ -47,13 +46,11 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   final disciplineController = TextEditingController();
   final orgaController = TextEditingController();
 
-  String _eventType = '';
-  String _eventTypeResult = '';
+  String _eventType = "soiree";
 
-  bool showForm = false;
   bool showCoursField = false;
-  bool showImgField = false;
-  bool showOrgaField = false;
+  bool showImgField = true;
+  bool showOrgaField = true;
 
   void _sendNewEvent(){
     Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending');
@@ -64,27 +61,23 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   void initState() {
     super.initState();
     _eventType = '';
-    _eventTypeResult = '';
   }
 
-  void checkFieldVisibility() {
-    if (_eventType == "soiree") {
-      showForm = true;
+  void checkFieldVisibility(eventType){
+    if(eventType == "soiree"){
       showOrgaField = true;
       showImgField = true;
       showCoursField = false;
-    } else if (_eventType == "competition") {
-      showForm = true;
+    }else if(eventType == "comp"){
       showImgField = true;
       showCoursField = false;
       showOrgaField = false;
-    } else if (_eventType == "cours") {
-      showForm = true;
+    }else if(eventType == "cours"){
       showCoursField = true;
       showOrgaField = false;
       showImgField = false;
-    }
-    ;
+    };
+    _eventType = eventType;
   }
 
   @override
@@ -95,52 +88,32 @@ class FormNewEvenementState extends State<FormNewEvenement> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // DropDownButtonFormField(
-          //   titleText: "Type d'évènement",
-          //   hintText: 'Veuillez choisir un type',
-          //   value: _eventType,
-          //   onSaved: (value) {
-          //     setState(() {
-          //       _eventTypeResult = value;
-          //     });
-          //   },
-          //   onChanged: (value) {
-          //     setState(() {
-          //       _eventType = value;
-          //       checkFieldVisibility();
-          //     });
-          //   },
-          //   dataSource: const [
-          //     {
-          //       "display": "Soirée",
-          //       "value": "soiree",
-          //     },
-          //     {
-          //       "display": "Cours",
-          //       "value": "cours",
-          //     },
-          //     {
-          //       "display": "Compétition",
-          //       "value": "competition",
-          //     },
-          //   ],
-          //   textField: 'display',
-          //   valueField: 'value',
-          //   validator: (value) {
-          //     if (value == '') {
-          //       return 'Please select an option';
-          //     }
-          //     return null;
-          //   },
-          // ),
+          DropdownButtonFormField(
+            items: const[
+              DropdownMenuItem(child: Text("Soirée"), value: "soiree",),
+              DropdownMenuItem(child: Text("Cours"), value: "cours",),
+              DropdownMenuItem(child: Text("Compétition"), value: "comp",)
+            ],
+            value: "soiree",
+            onChanged: (value) { setState(() {
+              checkFieldVisibility(value);
+            }); ;},
+            hint: const Text("Choisissez un type d'évènement"),
+            validator: (value) {
+              if (value == '') {
+                return 'Veuillez choisir une option';
+              }
+              return null;
+            },
+          ),
           SizedBox(height: 25.0),
-          Visibility(
-              visible: showForm,
-              child: Column(children: <Widget>[
+            Column(
+              children: <Widget>[
                 TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "Titre de l'évènement"),
+                      labelText: "Titre de l'évènement"
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer un nom valide.';
@@ -149,13 +122,12 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                   },
                   controller: nomController,
                 ),
-                SizedBox(
-                  height: 25.0,
-                ),
+                SizedBox(height: 25.0,),
                 TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "Description de l'évènement"),
+                      labelText: "Description de l'évènement"
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer une description.';
@@ -164,13 +136,12 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                   },
                   controller: descController,
                 ),
-                SizedBox(
-                  height: 25.0,
-                ),
+                SizedBox(height: 25.0,),
                 TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "Date de l'évènement"),
+                      labelText: "Date de l'évènement"
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer une date valide.';
@@ -179,15 +150,14 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                   },
                   controller: dateController,
                 ),
-                const SizedBox(
-                  height: 25.0,
-                ),
+                const SizedBox(height: 25.0,),
                 Visibility(
                   visible: showCoursField,
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "Terrain du cours"),
+                        labelText: "Terrain du cours"
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer un terrain.';
@@ -197,17 +167,14 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                     controller: terrainController,
                   ),
                 ),
-                Visibility(
-                    visible: showCoursField,
-                    child: SizedBox(
-                      height: 25.0,
-                    )),
+                Visibility(visible: showCoursField, child: SizedBox(height: 25.0,)),
                 Visibility(
                   visible: showCoursField,
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "Discipline du cours"),
+                        labelText: "Discipline du cours"
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer une discipline.';
@@ -217,17 +184,14 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                     controller: disciplineController,
                   ),
                 ),
-                Visibility(
-                    visible: showCoursField,
-                    child: SizedBox(
-                      height: 25.0,
-                    )),
+                Visibility(visible: showCoursField, child: SizedBox(height: 25.0,)),
                 Visibility(
                   visible: showOrgaField,
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "Organisateur de la soirée"),
+                        labelText: "Organisateur de la soirée"
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer un nom valide.';
@@ -237,17 +201,14 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                     controller: orgaController,
                   ),
                 ),
-                Visibility(
-                    visible: showOrgaField,
-                    child: SizedBox(
-                      height: 25.0,
-                    )),
+                Visibility(visible: showOrgaField, child: SizedBox(height: 25.0,)),
                 Visibility(
                   visible: showImgField,
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "Illustration du post de l'évènement"),
+                        labelText: "Illustration du post de l'évènement"
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer un lien valide.';
@@ -257,39 +218,21 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                     controller: imgController,
                   ),
                 ),
-                Visibility(
-                    visible: showImgField,
-                    child: SizedBox(
-                      height: 25.0,
-                    )),
+                Visibility(visible: showImgField, child: SizedBox(height: 25.0,)),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
                     onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
-                        _sendNewEvent(context);
-                        print('hi');
+                        _sendNewEvent();
                       }
                     },
                     child: const Text('Submit'),
                   ),
-                  Visibility(visible: showImgField, child: SizedBox(height: 25.0,)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          _sendNewEvent();
-                        }
-                      },
-                      child: const Text('Submit'),
-                    ),
-                  ),
-                ]
-            )
-          ),
+                ),
+              ]
+          )
         ],
       ),
     );
