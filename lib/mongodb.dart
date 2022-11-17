@@ -9,7 +9,6 @@ class MongoDataBase {
   static DbCollection? collection;
   static DbCollection? eventCollection;
 
-
   static connect() async {
     var db = await Db.create(MONGO_URL);
     await db.open();
@@ -23,13 +22,13 @@ class MongoDataBase {
 
   static addUser(User user) async {
     await collection?.insertOne({
-      'name' : user.name,
-      'mail' : user.mail,
-      'password' : user.password,
-      'image' : user.picture,
+      'name': user.name,
+      'mail': user.mail,
+      'password': user.password,
+      'image': user.picture,
       'token': user.token,
       'isOwner': user.isOwner,
-      "type" : user.type,
+      "type": user.type,
     });
   }
 
@@ -49,43 +48,40 @@ class MongoDataBase {
       bool isOwner = item["isOwner"];
       String type = item["type"];
       //on crée un objet à partir des variables extraites du json
-      final user = User(name,mail,pwd,img,token,isOwner,type);
+      final user = User(name, mail, pwd, img, token, isOwner, type);
       //on ajoute l'objet à la liste vide
       usersList.add(user);
-      }
-    );
+    });
     //on retourne la liste
     return usersList;
   }
 
   static getUserByToken(token) async {
-    var user = await collection?.findOne(
-      where.eq("token", token));
+    var user = await collection?.findOne(where.eq("token", token));
     return user;
   }
 
-  static updateUserPassword(User user, String password) async{
+  static updateUserPassword(User user, String password) async {
     var username = user.name;
     var mail = user.mail;
-    await collection?.update(where.eq('name',username).and(where.eq('mail', mail)),
+    await collection?.update(
+        where.eq('name', username).and(where.eq('mail', mail)),
         modify.set('password', password));
-    }
+  }
 
-
-
-  static addEvent(type,name,desc,date,img,terrain,discipline,organisateur) async {
+  static addEvent(
+      type, name, desc, date, img, terrain, discipline, organisateur) async {
     await eventCollection?.insertOne({
-      'type':type,
-      'name':name,
-      'desc':desc,
-      'date':date,
-      'img':img,
-      'terrain':terrain,
-      'discipline':discipline,
-      'organisateur':organisateur
+      'type': type,
+      'name': name,
+      'desc': desc,
+      'date': date,
+      'img': img,
+      'terrain': terrain,
+      'discipline': discipline,
+      'organisateur': organisateur
     });
 
     print("addEvent appelé.");
-
   }
 }
