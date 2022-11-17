@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:stable_manager/page/list.dart';
+import 'page/homepage.dart';
+import 'page/listDb.dart';
+import 'database/mongodb.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoDatabase.connect();
   runApp(const MyApp());
 }
 
@@ -15,35 +21,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Stable Manager'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
+      // home: HomePage(),
+      // home: ListPage(),
+      home: ListDbView(),
+      // home: GenerateRand(),
     );
   }
 }
