@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:stable_manager/evenements.dart';
 import 'package:stable_manager/main.dart';
 
+import '../mongodb.dart';
+import '../obj/User.dart';
 import 'profile.dart';
 
 class Cavalier extends StatefulWidget{
@@ -64,7 +66,38 @@ class _MyCavalierState extends State<Cavalier>{
           appBar :AppBar(
             title: Text("Cavaliers"),
           ),
-
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FutureBuilder(
+                future: MongoDataBase.getUsers(),
+                builder: (context, AsyncSnapshot snapshot){
+                  if(snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }else{
+                    if(snapshot.hasData){
+                      var totalData = snapshot.data.length;
+                      print("Total data$totalData");
+                      return ListView.builder(
+                          itemCount:snapshot.data.length,
+                          itemBuilder: (context, index){
+                            return displayUser(
+                                snapshot.data[index]
+                            );
+                          }
+                      );
+                    }else{
+                      return const Center(
+                        child: Text("no data avalaible"),
+                      );
+                    }
+                  }
+                },
+              ),
+            ),
+          ),
 
           bottomNavigationBar : BottomNavigationBar(
             items: const<BottomNavigationBarItem>[
@@ -96,5 +129,24 @@ class _MyCavalierState extends State<Cavalier>{
           ),
 
         );
+  }
+
+  Widget displayUser(User data) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Text('Name: ' + data.name),
+            const SizedBox(height: 5,),
+            Text('Mail: ' + data.mail),
+            const SizedBox(height: 5,),
+            Text('Picture: ' + data.picture),
+            const SizedBox(height: 5,),
+            Text('Type: ' + data.type),
+          ],
+        ),
+      ),
+    );
   }
 }
