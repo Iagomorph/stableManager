@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:stable_manager/evenements.dart';
+import 'package:stable_manager/pages/profile.dart';
 import 'mongodb.dart';
 
+import 'pages/cavaliers.dart';
 import 'pages/login.dart';
 import 'obj/User.dart';
 import 'mongodb.dart';
@@ -13,6 +15,20 @@ Future<void> main() async {
   await MongoDataBase.connect();
   runApp(const MyApp());
 }
+
+// class CustomRoute<T> extends MaterialPageRoute<T> {
+//   CustomRoute({ WidgetBuilder builder, RouteSettings settings })
+//       : super(builder: builder, settings: settings);
+//
+//   @override
+//   Widget buildTransitions(BuildContext context,
+//       Animation<double> animation,
+//       Animation<double> secondaryAnimation,
+//       Widget child) {
+//       return child;
+//   }
+// }
+
 
 class MyApp extends StatelessWidget {
 
@@ -50,10 +66,47 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
+
 void _onItemTapped(int index){
   setState(() {
     _selectedIndex = index;
   });
+
+  switch(_selectedIndex){
+    case (0):{
+      break;
+    }
+    case (1): {
+      Navigator.push(context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const Profile(),
+            transitionDuration: Duration.zero,
+          ));
+      break;
+    }
+    case(2): {
+      Navigator.push(context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const Evenements(),
+            transitionDuration: Duration.zero,
+          ));
+      break;
+    }
+    case(3): {
+      Navigator.push(context,
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const Cavalier(),
+            transitionDuration: Duration.zero,
+          )
+      );
+      break;
+    }
+    break;
+
+
+
+  };
+
 }
 
   @override
@@ -72,34 +125,37 @@ void _onItemTapped(int index){
           bottomNavigationBar : BottomNavigationBar(
             items: const<BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.newspaper,),
+
+                  icon: Icon(Icons.newspaper, color: Colors.black54,),
                   label: 'Actus',
-                backgroundColor: Colors.lightBlueAccent,
               ),
 
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person,),
+                  icon: Icon(Icons.person, color: Colors.black54,),
                   label: 'Profil',
-                backgroundColor: Colors.lightBlueAccent,
 
               ),
 
               BottomNavigationBarItem(
-                  icon: Icon(Icons.event,),
+
+                  icon: Icon(Icons.event, color: Colors.black54,),
                   label: "Evènements",
-                backgroundColor: Colors.lightBlueAccent,
+
 
               ),
 
               BottomNavigationBarItem(
-                  icon: Icon(Icons.people,),
+
+                  icon: Icon(Icons.people, color: Colors.black54,),
                   label: "Cavaliers",
-                backgroundColor: Colors.blue,
+
               )
             ],
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
-          selectedItemColor: Colors.amber,
+
+          selectedItemColor: Colors.blue,
+
           ),
     );
 
