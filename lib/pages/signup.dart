@@ -132,8 +132,9 @@ class _MySignupState extends State<Signup>{
 
 
                     User user = User (name,mail,pwd,img,token,false,type);
-                    await MongoDataBase.addUser(user);
 
+
+                    await MongoDataBase.addUser(user);
                     Navigator.pop(context, user);
 
                   },
