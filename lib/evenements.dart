@@ -43,33 +43,6 @@ class _AllEvenements extends State<Evenements> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  _imgBool(type){
-    if(type == "cours"){
-      return false;
-    }else{
-      return true;
-    }
-  }
-  _orgaBool(type){
-    if(type == "soiree"){
-      return true;
-    }else{
-      return false;
-    }
-  }
-  _coursBool(type){
-    if(type == "cours"){
-      return true;
-    }else{
-      return false;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -100,6 +73,7 @@ class _AllEvenements extends State<Evenements> {
                 if (snapshot.hasData) {
                   children = <Widget>[
                     ListView.builder(
+                      reverse: true,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snapshot.data.length,
@@ -109,16 +83,16 @@ class _AllEvenements extends State<Evenements> {
                           child: Column(
                             children: <Widget>[
                               ListTile(
-                                leading: Visibility(
-                                  visible: _imgBool(snapshot.data[index].type),
-                                  child: Image.network(
-                                    snapshot.data[index].img,
-                                    fit: BoxFit.contain,
-                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                      return Image.network("https://thndl.com/images/5_2.jpg", fit: BoxFit.contain);
-                                    },
-                                  ),
-                                ),
+                                // leading: Visibility(
+                                //   visible: _imgBool(snapshot.data[index].type),
+                                //   child: Image.network(
+                                //     snapshot.data[index].img,
+                                //     fit: BoxFit.contain,
+                                //     errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                //       return Image.network("https://thndl.com/images/5_2.jpg", fit: BoxFit.contain);
+                                //     },
+                                //   ),
+                                // ),
                                 title: Text(snapshot.data[index].name, style: TextStyle(fontSize: 25),),
                                 subtitle: Text(snapshot.data[index].desc, style: TextStyle(fontSize: 20),),
                               ),
@@ -144,21 +118,21 @@ class _AllEvenements extends State<Evenements> {
                                   Visibility(visible: _coursBool(snapshot.data[index].type), child: const SizedBox(width: 8),),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  TextButton(
-                                    child: const Text('PARTICIPER'),
-                                    onPressed: () {/* ... */},
-                                  ),
-                                  const SizedBox(width: 8),
-                                  TextButton(
-                                    child: const Text('VALIDER'),
-                                    onPressed: () {/* ... */},
-                                  ),
-                                  const SizedBox(width: 8),
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.end,
+                              //   children: <Widget>[
+                              //     TextButton(
+                              //       child: const Text('PARTICIPER'),
+                              //       onPressed: () {/* ... */},
+                              //     ),
+                              //     const SizedBox(width: 8),
+                              //     TextButton(
+                              //       child: const Text('VALIDER'),
+                              //       onPressed: () {/* ... */},
+                              //     ),
+                              //     const SizedBox(width: 8),
+                              //   ],
+                              // ),
                             ],
                           ),
                         );
