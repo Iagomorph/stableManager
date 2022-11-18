@@ -84,7 +84,7 @@ class _MyCavalierState extends State<Cavalier> {
 
                   return GridView.builder(
                     gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) =>

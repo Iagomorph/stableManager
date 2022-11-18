@@ -1,20 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:stable_manager/evenementsForm.dart';
-import 'mongodb.dart';
 
-class Evenements extends StatefulWidget{
+class Evenements extends StatefulWidget {
   static const tag = "evenements";
 
   const Evenements({super.key});
+
   @override
   State<Evenements> createState() => _AllEvenements();
-
 }
 
-class _AllEvenements extends State<Evenements>{
-
+class _AllEvenements extends State<Evenements> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +31,6 @@ class _AllEvenements extends State<Evenements>{
           )
         ],
       ),
-
     );
   }
 }

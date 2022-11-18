@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stable_manager/pages/profile.dart';
+
 import '../evenements.dart';
 import '../mongodb.dart';
 import 'cavaliers.dart';
@@ -13,7 +14,6 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -59,7 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ));
           break;
         }
-    };
+    }
+    ;
   }
 
   @override
@@ -69,9 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
-          child:
-          Column(mainAxisAlignment: MainAxisAlignment.start, children: <
-              Widget>[
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
             FutureBuilder(
               future: MongoDataBase.getLog(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -90,17 +91,20 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: <Widget>[
                               ListTile(
                                 title: Text(
-                                  'Type: ' + snapshot.data[index].type,
+                                  snapshot.data[index].type,
                                   style: TextStyle(fontSize: 25),
                                 ),
-                                subtitle: Text(
-                                  'User: ' + snapshot.data[index].user,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                trailing: Text(
-                                  'Event: ' + snapshot.data[index].event,
-                                  style: TextStyle(fontSize: 20),
-                                ),
+                                subtitle: (snapshot.data[index].user != null)
+                                    ? Text(
+                                        snapshot.data[index].user,
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    : (snapshot.data[index].user != null)
+                                        ? Text(
+                                            snapshot.data[index].event,
+                                            style: TextStyle(fontSize: 20),
+                                          )
+                                        : null,
                               ),
                             ],
                           ),
@@ -135,9 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-          ]
-          )
-      ),
+          ])),
       //FIN DE L'APPBAR MERCI DE METTRE VOTRE CODE SOUS CE MSG ET AU DESSUS DE LA NAVBAR DU BAS
 
       //NAVBAR DU BAS MERCI DE METTRE VOTRE CODE AU DESSUS DE CA ET SOUS L'APPBAR

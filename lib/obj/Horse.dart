@@ -1,4 +1,3 @@
-
 import 'dart:core';
 
 class Horse {
@@ -10,11 +9,14 @@ class Horse {
   String race;
   String sexe;
   String spec;
-  String DpUser ;
+  String DpUser;
 
-  Horse(this.userId,this.image, this.nom, this.age, this.robe, this.race, this.sexe, this.spec, [this.DpUser = "Aucun"]);
+  Horse(this.userId, this.image, this.nom, this.age, this.robe, this.race,
+      this.sexe, this.spec,
+      [this.DpUser = "Aucun"]);
 
-  fromJson(Map<String, dynamic> json){
-    return Horse(json['owner'],json['photo'],json['name'],json['age'],json['robe'],json['race'],json['sexe'],json['spec']);
+  fromJson(Map<String, dynamic> json) {
+    return Horse(json['owner'], json['photo'], json['name'], json['age'],
+        json['robe'], json['race'], json['sexe'], json['spec']);
   }
 }

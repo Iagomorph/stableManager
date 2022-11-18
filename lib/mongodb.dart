@@ -3,9 +3,8 @@ import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
 
 import 'constant.dart';
-import 'obj/Horse.dart';
-import 'eventClass.dart';
 import 'logClass.dart';
+import 'obj/Horse.dart';
 import 'obj/User.dart';
 
 class MongoDataBase {
@@ -61,23 +60,14 @@ class MongoDataBase {
       String type = item["type"];
       //on crée un objet à partir des variables extraites du json
       // if(item['ffe'] != "Aucun" && item['age'] != "Aucun" && item['tel'] != "Aucun"){
-        String ffe = item['ffe'];
-        String age = item['age'];
-        String tel = item['tel'];
+      String ffe = item['ffe'];
+      String age = item['age'];
+      String tel = item['tel'];
 
-        final user = User(
-            name,
-            mail,
-            pwd,
-            img,
-            token,
-            isOwner,
-            type,
-            ffe,
-            age,
-            tel);
+      final user =
+          User(name, mail, pwd, img, token, isOwner, type, ffe, age, tel);
 
-        usersList.add(user);
+      usersList.add(user);
 
       // }
       // final user = User(
@@ -90,15 +80,13 @@ class MongoDataBase {
       //     type);
       //on ajoute l'objet à la liste vide
       usersList.add(user);
-      }
-    );
+    });
     //on retourne la liste
     return usersList;
   }
 
   static getUserByToken(token) async {
-    var user = await collection?.findOne(
-        where.eq("token", token));
+    var user = await collection?.findOne(where.eq("token", token));
     return user;
   }
 
@@ -110,9 +98,8 @@ class MongoDataBase {
         modify.set('password', password));
   }
 
-
-  static addEvent(type, name, desc, date, img, terrain, discipline,
-      organisateur) async {
+  static addEvent(
+      type, name, desc, date, img, terrain, discipline, organisateur) async {
     await eventCollection?.insertOne({
       'type': type,
       'name': name,
@@ -127,7 +114,6 @@ class MongoDataBase {
     print("addEvent appelé.");
   }
 
-
   static addHorse(Horse horse) async {
     await horseCollection?.insertOne({
       "owner": horse.userId,
@@ -138,7 +124,7 @@ class MongoDataBase {
       "race": horse.race,
       "sexe": horse.sexe,
       "spec": horse.spec,
-      "DpUser" : horse.DpUser,
+      "DpUser": horse.DpUser,
     });
   }
 
@@ -157,17 +143,9 @@ class MongoDataBase {
       String sexe = item['sexe'];
       String spec = item['spec'];
       String DpUser = item['DpUser'];
-        final horse = Horse(
-            userid,
-            img,
-            name,
-            age,
-            robe,
-            race,
-            sexe,
-            spec,
-            DpUser);
-        horsesList.add(horse);
+      final horse =
+          Horse(userid, img, name, age, robe, race, sexe, spec, DpUser);
+      horsesList.add(horse);
     });
     return horsesList;
   }
@@ -176,9 +154,8 @@ class MongoDataBase {
     // var user = getUserByToken(token);
 
     List<Horse> horseList = [];
-    var userHorseList = await horseCollection?.find(
-        where.eq("userId", token)
-    ).toList();
+    var userHorseList =
+        await horseCollection?.find(where.eq("userId", token)).toList();
 
     userHorseList?.forEach((item) {
       String owner = item['userId'];
@@ -191,16 +168,8 @@ class MongoDataBase {
       String spec = item['spec'];
       String DpUser = item['DpUser'];
 
-      final horse = Horse(
-          owner,
-          img,
-          name,
-          age,
-          robe,
-          race,
-          sexe,
-          spec,
-      DpUser);
+      final horse =
+          Horse(owner, img, name, age, robe, race, sexe, spec, DpUser);
 
       horseList.add(horse);
     });
@@ -210,9 +179,8 @@ class MongoDataBase {
 
   static getUserDpHorses(token) async {
     List<Horse> horseList = [];
-    var userHorseList = await horseCollection?.find(
-        where.eq("DpUser", token)
-    ).toList();
+    var userHorseList =
+        await horseCollection?.find(where.eq("DpUser", token)).toList();
 
     userHorseList?.forEach((item) {
       String owner = item['userId'];
@@ -225,16 +193,8 @@ class MongoDataBase {
       String spec = item['spec'];
       String DpUser = item['DpUser'];
 
-      final horse = Horse(
-          owner,
-          img,
-          name,
-          age,
-          robe,
-          race,
-          sexe,
-          spec,
-      DpUser);
+      final horse =
+          Horse(owner, img, name, age, robe, race, sexe, spec, DpUser);
 
       horseList.add(horse);
     });
@@ -243,17 +203,26 @@ class MongoDataBase {
   }
 
   static updateHorseDp(Horse horse, String uToken, String DpToken) async {
-
-  await horseCollection?.update(where.eq('owner',uToken).and(where.eq('name',horse.nom)),
-  modify.set("DpUser", DpToken),
-  );
+    await horseCollection?.update(
+      where.eq('owner', uToken).and(where.eq('name', horse.nom)),
+      modify.set("DpUser", DpToken),
+    );
   }
 
   //créer un form userUpdate et horse update avec une méthode updateUser/Horse qui prend tout les champs
   //surtout les "Aucun" et replace ces fields avec les values des user/horse passer
   //add le bouton sur les chevaux et le bouton modif profil
   static updateUser(User user) async {
-    await collection?.updateOne(where.eq('token',user.token),({'name':user.name, 'mail':user.mail,'type':user.type,'ffe':user.ffe,'age':user.age, 'tel':user.tel }));
+    await collection?.updateOne(
+        where.eq('token', user.token),
+        ({
+          'name': user.name,
+          'mail': user.mail,
+          'type': user.type,
+          'ffe': user.ffe,
+          'age': user.age,
+          'tel': user.tel
+        }));
   }
 
   // {
@@ -278,12 +247,25 @@ class MongoDataBase {
   static addLog(Logs logs) async {
     await logCollection?.insertOne({
       'type': logs.type,
-      'user' : logs.user,
-      'event' : logs.event,
+      'user': logs.user,
+      'event': logs.event,
     });
     print("addLog appelé");
   }
+
   static updateHorse(Horse horse, User user) async {
-    await horseCollection?.update(where.eq('userId',user.token), ({'photo':horse.image,'name':horse.nom,'age':horse.age,'robe':horse.robe,'race':horse.race,'sexe':horse.sexe,'spec':horse.spec,"userId":horse.userId,"DpUser":horse.DpUser}));
+    await horseCollection?.update(
+        where.eq('userId', user.token),
+        ({
+          'photo': horse.image,
+          'name': horse.nom,
+          'age': horse.age,
+          'robe': horse.robe,
+          'race': horse.race,
+          'sexe': horse.sexe,
+          'spec': horse.spec,
+          "userId": horse.userId,
+          "DpUser": horse.DpUser
+        }));
   }
 }
