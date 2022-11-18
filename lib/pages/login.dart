@@ -69,7 +69,7 @@ class _MyLoginState extends State<Login>{
                 controller: nameController,
               ),
 
-                TextFormField( decoration:
+                TextFormField( obscureText: true,decoration:
                 const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText:'password',
@@ -159,7 +159,7 @@ class _MyLoginState extends State<Login>{
 
                           Text("Nouveau mot de passe :"),
 
-                          TextFormField( decoration:
+                          TextFormField( obscureText: true,decoration:
                           const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText:'mot de passe',
