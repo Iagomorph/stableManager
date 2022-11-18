@@ -99,6 +99,7 @@ class FormNewEvenementState extends State<FormNewComment> {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
                         _sendNewComment();
+                        Navigator.pop(context);
                       }
                     },
                     child: const Text('Submit'),

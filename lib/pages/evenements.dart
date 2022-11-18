@@ -273,7 +273,9 @@ class _MyEventState extends State<Evenements>{
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => Comments(snapshot.data[index].token)),
-                                      );
+                                      ).then((_) {
+                                        setState(() {});
+                                      });;
                                     },
                                   ),
                                 ],

@@ -111,7 +111,9 @@ class _MyCommentState extends State<Comments>{
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CommentsForm(eventToken)),
-              );
+              ).then((_) {
+                setState(() {});
+              });;
             },
           )
         ],
@@ -204,8 +206,8 @@ class _MyCommentState extends State<Comments>{
                           color: Colors.red,
                           size: 60,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 16),
                           //child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15)),
                           child: Text("Cet évènement n'a aucun commentaire.", style: TextStyle(fontSize: 15)),
                         ),

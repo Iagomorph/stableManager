@@ -16,11 +16,14 @@ class User {
   String token;
   bool isOwner = false;
   String type;
+  String ffe ;
+  String age ;
+  String tel ;
 
 
 
 
-  User(this.name, this.mail, this.password, this.picture, this.token, this.isOwner, this.type);
+  User(this.name, this.mail, this.password, this.picture, this.token, this.isOwner, this.type, [this.ffe = "Aucun",this.age = "Aucun",this.tel="Aucun"]);
 
   fromJson(Map<String, dynamic> json){
     print(json);

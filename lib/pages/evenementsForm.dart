@@ -260,6 +260,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
                         _sendNewEvent();
+                        Navigator.pop(context);
                       }
                     },
                     child: const Text('Submit'),
