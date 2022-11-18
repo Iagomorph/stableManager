@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:stable_manager/pages/evenements.dart';
 import 'package:stable_manager/main.dart';
 
+import '../mongodb.dart';
+import '../obj/User.dart';
 import 'profile.dart';
 
 class Cavalier extends StatefulWidget{
-
-
 
   const Cavalier({super.key});
   @override
@@ -64,6 +64,49 @@ class _MyCavalierState extends State<Cavalier>{
           appBar :AppBar(
             title: Text("Cavaliers"),
           ),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FutureBuilder(
+                future: MongoDataBase.getUsers(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      var totalData = snapshot.data.length;
+                      print("Total data$totalData");
+
+                      return GridView.builder(
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        itemBuilder: (context, index) =>
+                            displayUser(snapshot.data[index]),
+                        itemCount: snapshot.data.length,
+                      );
+
+                      // return ListView.builder(
+                      //     itemCount:snapshot.data.length,
+                      //     itemBuilder: (context, index){
+                      //       return displayUser(
+                      //           snapshot.data[index]
+                      //       );
+                      //     }
+                      // );
+                    } else {
+                      return const Center(
+                        child: Text("no data avalaible"),
+                      );
+                    }
+                  }
+                },
+              ),
+            ),
+          ),
 
 
           bottomNavigationBar : BottomNavigationBar(
@@ -96,5 +139,28 @@ class _MyCavalierState extends State<Cavalier>{
           ),
 
         );
+
+  }
+  Widget displayUser(User data) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridTile(
+          header: GridTileBar(
+            backgroundColor: Colors.blueGrey,
+            leading: const Icon(Icons.person),
+            title: Text(data.name),
+            trailing: const Icon(
+              Icons.menu,
+            ),
+          ),
+          footer: const GridTileBar(
+            backgroundColor: Colors.blueGrey,
+            leading: Icon(Icons.delete),
+          ),
+          child: Image.network(
+            data.picture,
+            fit: BoxFit.cover,
+          )),
+    );
   }
 }

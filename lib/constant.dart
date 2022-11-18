@@ -3,3 +3,4 @@ const COLLECTION_NAME = "users";
 const EVENT_COLLECTION_NAME = "events";
 const HORSE_COLLECTION = "horses";
 const COMMENT_COLLECTION_NAME = "comments";
+const LOG_COLLECTION = "log";

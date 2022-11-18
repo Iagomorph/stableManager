@@ -9,6 +9,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'constant.dart';
 import 'obj/Horse.dart';
 import 'obj/User.dart';
+import 'obj/logClass.dart';
 
 
 class MongoDataBase {
@@ -16,6 +17,7 @@ class MongoDataBase {
   static DbCollection? eventCollection;
   static DbCollection? horseCollection;
   static DbCollection? commentCollection;
+  static DbCollection? logCollection;
 
   static connect() async {
     var db = await Db.create(MONGO_URL);
@@ -28,6 +30,7 @@ class MongoDataBase {
     eventCollection = db.collection(EVENT_COLLECTION_NAME);
     horseCollection = db.collection(HORSE_COLLECTION);
     commentCollection = db.collection(COMMENT_COLLECTION_NAME);
+    logCollection = db.collection(LOG_COLLECTION);
   }
 
   static addUser(User user) async {
@@ -342,6 +345,28 @@ class MongoDataBase {
 
   static updateHorse(Horse horse, User user) async {
     await horseCollection?.update(where.eq('userId',user.token), ({'photo':horse.image,'name':horse.nom,'age':horse.age,'robe':horse.robe,'race':horse.race,'sexe':horse.sexe,'spec':horse.spec,"userId":horse.userId,"DpUser":horse.DpUser}));
+  }
+
+  static addLog(Logs logs) async {
+    await logCollection?.insertOne({
+      'type': logs.type,
+      'user': logs.user,
+      'event': logs.event,
+    });
+    print("addLog appelé");
+  }
+
+  static getLog() async {
+    var logs = await logCollection?.find().toList();
+    List logsList = [];
+    logs?.forEach((item) {
+      String type = item["type"];
+      String user = item["user"];
+      String event = item["event"];
+      final log = Logs(type, user, event);
+      logsList.add(log);
+    });
+    return logsList;
   }
 }
 
