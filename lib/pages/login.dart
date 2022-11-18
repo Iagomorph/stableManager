@@ -47,7 +47,7 @@ class _MyLoginState extends State<Login>{
     return
         Scaffold(
           appBar: AppBar(
-            title: Text("Sign in"),
+            title: Text("Connexion"),
           ),
 
           body:
@@ -104,13 +104,21 @@ class _MyLoginState extends State<Login>{
                 ),
 
                 //bouton redirect signup
-                ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Signup()));
+                ElevatedButton(onPressed: () async {
+                  final result =
+                   await Navigator.push(context, MaterialPageRoute(builder: (context) => const Signup()
+                   ),
+                   );
+                  setState(() {
+                    Users.add(result);
+                  });
                 }, child: const Text('Inscrivez-vous')),
 
                 //bouton reset mdp
                 ElevatedButton(onPressed: (){
-                  showDialog(context: context, builder: (context){
+                  showDialog(context: context,
+                      barrierDismissible:false,
+                      builder: (context){
                     return AlertDialog(
                       content: Form(child: Column(
                         children: [
