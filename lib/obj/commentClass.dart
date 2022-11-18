@@ -1,8 +1,8 @@
 class Comment {
-  String userToken = '';
+  String username = '';
   String eventToken = '';
   String commentToken = '';
-  String comment = '';
+  String message = '';
 
-  Comment(this.userToken, this.eventToken, this.commentToken, this.comment);
+  Comment(this.username, this.eventToken, this.commentToken, this.message);
 }

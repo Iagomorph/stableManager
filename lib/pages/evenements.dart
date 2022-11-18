@@ -7,6 +7,7 @@ import 'cavaliers.dart';
 import '../mongodb.dart';
 import 'profile.dart';
 import '../obj/UserManager.dart';
+import 'comments.dart';
 
 class Evenements extends StatefulWidget{
   static const tag = "evenements";
@@ -243,7 +244,12 @@ class _MyEventState extends State<Evenements>{
                                   const SizedBox(width: 8),
                                   TextButton(
                                     child: const Text('COMMENTAIRES'),
-                                    onPressed: () {/* ... */},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Comments(snapshot.data[index].token)),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:stable_manager/obj/UserManager.dart';
 
 import 'obj/eventClass.dart';
+import 'obj/commentClass.dart';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -11,6 +12,7 @@ import 'obj/User.dart';
 class MongoDataBase {
   static DbCollection? collection;
   static DbCollection? eventCollection;
+  static DbCollection? commentCollection;
 
   static connect() async {
     var db = await Db.create(MONGO_URL);
@@ -21,6 +23,7 @@ class MongoDataBase {
     print(status);
     collection = db.collection(COLLECTION_NAME);
     eventCollection = db.collection(EVENT_COLLECTION_NAME);
+    commentCollection = db.collection(COMMENT_COLLECTION_NAME);
   }
 
   static addUser(User user) async {
@@ -132,5 +135,39 @@ class MongoDataBase {
   static getAllParticipants(eventToken, userToken) async{
     var collec = await eventCollection?.find(where.eq('token', eventToken)).toList();
     return(collec?[0]['participants']);
+  }
+
+  static addComment(comment) async {
+    await commentCollection?.insertOne({
+      'eventToken': comment.eventToken,
+      'username': comment.username,
+      'commentToken': comment.commentToken,
+      'message': comment.message
+    });
+
+    print("addComment appelé.");
+    print(comment.username);
+    print(comment.eventToken);
+    print(comment.message);
+    print(comment.commentToken);
+  }
+  static getComments(eventToken) async{
+    var comments = await commentCollection?.find(where.eq('eventToken', eventToken)).toList();
+    List commentsList = [];
+    comments?.forEach((item) {
+      String eventToken = item["eventToken"];
+      String username = item["username"];
+      String commentToken = item["commentToken"];
+      String message = item["message"];
+
+      Comment comment = Comment(username,eventToken, commentToken, message);
+
+      commentsList.add(comment);
+    });
+
+    print('Commentaires vvv');
+    print(commentsList);
+    print(commentsList[0].username);
+    return commentsList;
   }
 }
