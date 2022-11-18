@@ -11,6 +11,7 @@ class Event {
   List participants;
   List commentaires;
   String duree = '';
+  String adresse = '';
   String token = '';
 
   Event(
@@ -26,6 +27,7 @@ class Event {
     this.participants,
     this.commentaires,
     this.duree,
+    this.adresse,
     this.token
   );
 }

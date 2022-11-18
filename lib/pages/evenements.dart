@@ -81,6 +81,13 @@ class _MyEventState extends State<Evenements>{
       return false;
     }
   }
+  _compBool(type){
+    if(type == "comp"){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   _isParticipating(participants){
     if(participants.contains(UserManager.user.token)){
@@ -181,6 +188,10 @@ class _MyEventState extends State<Evenements>{
                               ),
                               Column(
                                 children: <Widget>[
+                                  Visibility(visible: _coursBool(snapshot.data[index].type), child: Text('Cours', style: TextStyle(fontSize: 18),)),
+                                  Visibility(visible: _compBool(snapshot.data[index].type), child: Text('Compétition', style: TextStyle(fontSize: 18),)),
+                                  Visibility(visible: _orgaBool(snapshot.data[index].type), child: Text('Soirée', style: TextStyle(fontSize: 18),)),
+
                                   Text('Date: '+snapshot.data[index].date, style: TextStyle(fontSize: 15),),
                                   Visibility(
                                     visible: _orgaBool(snapshot.data[index].type),
@@ -197,6 +208,10 @@ class _MyEventState extends State<Evenements>{
                                   Visibility(
                                       visible: _coursBool(snapshot.data[index].type),
                                       child: Text('Duree: '+snapshot.data[index].duree, style: TextStyle(fontSize: 15),)
+                                  ),
+                                  Visibility(
+                                      visible: _compBool(snapshot.data[index].type),
+                                      child: Text('Adresse: '+snapshot.data[index].adresse, style: TextStyle(fontSize: 15),)
                                   ),
                                   Text('Status: '+snapshot.data[index].status, style: TextStyle(fontSize: 15),),
                                 ],
@@ -276,9 +291,10 @@ class _MyEventState extends State<Evenements>{
                       color: Colors.red,
                       size: 60,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15)),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      //child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15)),
+                      child: Text("Vous n'avez aucun évènement.", style: TextStyle(fontSize: 15)),
                     ),
                   ];
                 } else {

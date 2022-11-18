@@ -90,6 +90,7 @@ class MongoDataBase {
       'participants':[UserManager.user.token],
       'commentaires':[],
       'duree':event.duree,
+      'adresse':event.adresse,
       'token':event.token
     });
 
@@ -112,9 +113,10 @@ class MongoDataBase {
       List participants = item["participants"];
       List commentaires = item["commentaires"];
       String duree = item["duree"];
+      String adresse = item["adresse"];
       String token = item["token"];
 
-      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status,participants,commentaires,duree,token);
+      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status,participants,commentaires,duree,adresse,token);
 
       eventsList.add(event);
     });

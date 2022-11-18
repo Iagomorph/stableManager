@@ -206,7 +206,8 @@ class _MyCommentState extends State<Comments>{
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15)),
+                          //child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15)),
+                          child: Text("Cet évènement n'a aucun commentaire.", style: TextStyle(fontSize: 15)),
                         ),
                       ];
                     } else {

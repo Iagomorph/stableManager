@@ -41,11 +41,13 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   final disciplineController = TextEditingController();
   final orgaController = TextEditingController();
   final dureeController = TextEditingController();
+  final adresseController = TextEditingController();
 
   String _eventType = "soiree";
 
   bool showCoursField = false;
   bool showOrgaField = true;
+  bool showCompField = false;
 
   String generateRandomToken(int len){
     var r = Random();
@@ -54,7 +56,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   }
 
   void _sendNewEvent(){
-    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending',[],[],dureeController.text,generateRandomToken(10));
+    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending',[],[],dureeController.text,adresseController.text,generateRandomToken(10));
     MongoDataBase.addEvent(event);
   }
 
@@ -68,11 +70,14 @@ class FormNewEvenementState extends State<FormNewEvenement> {
     if(eventType == "soiree"){
       showOrgaField = true;
       showCoursField = false;
+      showCompField = false;
     }else if(eventType == "comp"){
+      showCompField = true;
       showCoursField = false;
       showOrgaField = false;
     }else if(eventType == "cours"){
       showCoursField = true;
+      showCompField = false;
       showOrgaField = false;
     };
     _eventType = eventType;
@@ -200,6 +205,23 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                   ),
                 ),
                 Visibility(visible: showCoursField, child: SizedBox(height: 25.0,)),
+                Visibility(
+                  visible: showCompField,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Adresse de la compétition"
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Veuillez entrer une adresse.';
+                      }
+                      return null;
+                    },
+                    controller: adresseController,
+                  ),
+                ),
+                Visibility(visible: showCompField, child: SizedBox(height: 25.0,)),
                 Visibility(
                   visible: showOrgaField,
                   child: TextFormField(
