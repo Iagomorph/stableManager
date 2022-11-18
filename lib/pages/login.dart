@@ -182,7 +182,10 @@ class _MyLoginState extends State<Login>{
                           if (user.name == username && user.mail == mail){
                             await MongoDataBase.updateUserPassword(user, newPwd);
                             UserManager.user = user;
-                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (_,__,___) => const Login(),
+                              transitionDuration: Duration.zero,
+                            ));
                           } else {
                           }
                           });
