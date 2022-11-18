@@ -240,7 +240,7 @@ class MongoDataBase {
 
   static updateHorseDp(Horse horse, String uToken, String DpToken) async {
 
-  await horseCollection?.update(where.eq('owner',uToken).and(where.eq('name',horse.nom)),
+  await horseCollection?.update(where.eq('userId',uToken).and(where.eq('name',horse.nom)),
   modify.set("DpUser", DpToken),
   );
   }
