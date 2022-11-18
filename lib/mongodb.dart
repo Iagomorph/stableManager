@@ -1,14 +1,16 @@
 import 'dart:developer';
-import 'eventClass.dart';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
 import 'constant.dart';
+import 'eventClass.dart';
+import 'logClass.dart';
 import 'obj/User.dart';
 
 class MongoDataBase {
   static DbCollection? collection;
   static DbCollection? eventCollection;
+  static DbCollection? logCollection;
 
   static connect() async {
     var db = await Db.create(MONGO_URL);
@@ -19,9 +21,10 @@ class MongoDataBase {
     print(status);
     collection = db.collection(COLLECTION_NAME);
     eventCollection = db.collection(EVENT_COLLECTION_NAME);
+    logCollection = db.collection(LOG_COLLECTION_NAME);
     print('connect appelé');
   }
-    
+
   static addUser(User user) async {
     await collection?.insertOne({
       'name': user.name,
@@ -58,7 +61,6 @@ class MongoDataBase {
     return usersList;
   }
 
-
   static getUserByToken(token) async {
     var user = await collection?.findOne(where.eq("token", token));
     return user;
@@ -71,24 +73,25 @@ class MongoDataBase {
         where.eq('name', username).and(where.eq('mail', mail)),
         modify.set('password', password));
   }
+
   static addEvent(Event event) async {
     await eventCollection?.insertOne({
-      'type':event.type,
-      'name':event.name,
-      'desc':event.desc,
-      'date':event.date,
-      'img':event.img,
-      'terrain':event.terrain,
-      'discipline':event.discipline,
-      'organisateur':event.organisateur,
-      'status':event.status,
+      'type': event.type,
+      'name': event.name,
+      'desc': event.desc,
+      'date': event.date,
+      'img': event.img,
+      'terrain': event.terrain,
+      'discipline': event.discipline,
+      'organisateur': event.organisateur,
+      'status': event.status,
     });
 
     print("addEvent appelé");
   }
 
-  static getEvents() async{
-    var events = await eventCollection?.find().toList();
+  static getEvents() async {
+    var events = await collection?.find().toList();
     List eventsList = [];
     events?.forEach((item) {
       String type = item["type"];
@@ -101,7 +104,8 @@ class MongoDataBase {
       String organisateur = item["organisateur"];
       String status = item["status"];
 
-      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status);
+      Event event = Event(type, name, desc, date, img, terrain, discipline,
+          organisateur, status);
 
       eventsList.add(event);
     });
@@ -109,5 +113,33 @@ class MongoDataBase {
     print(eventsList);
     print(eventsList[0].name);
     return eventsList;
+  }
+
+  // {
+  // "type":"", // newEvent, newUser, eventValidated, eventRefused
+  // "user": {},
+  // "eve": {},
+  // }
+
+  static getLog() async {
+    var logs = await logCollection?.find().toList();
+    List logsList = [];
+    logs?.forEach((item) {
+      String type = item["type"];
+      String user = item["user"];
+      String event = item["event"];
+      final log = Logs(type, user, event);
+      logsList.add(log);
+    });
+    return logsList;
+  }
+
+  static addLog(Logs logs) async {
+    await logCollection?.insertOne({
+      'type': logs.type,
+      'user' : logs.user,
+      'event' : logs.event,
+    });
+    print("addLog appelé");
   }
 }

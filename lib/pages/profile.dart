@@ -3,6 +3,7 @@ import 'package:stable_manager/evenements.dart';
 
 import '../main.dart';
 import 'cavaliers.dart';
+import 'homepage.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

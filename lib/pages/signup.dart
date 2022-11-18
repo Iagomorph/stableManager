@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stable_manager/mongodb.dart';
 import 'package:stable_manager/obj/User.dart';
 
+import '../logClass.dart';
+
 class Signup extends StatefulWidget {
   static const tag = "signup";
 
@@ -37,7 +39,7 @@ class _MySignupState extends State<Signup> {
         title: Text("Sign Up"),
       ),
       body: Form(
-          //formulaire d'inscription
+        //formulaire d'inscription
           key: _formKey,
           child: Column(
             children: [
@@ -128,6 +130,10 @@ class _MySignupState extends State<Signup> {
 
                   User user = User(name, mail, pwd, img, token, false, type);
                   await MongoDataBase.addUser(user);
+
+                  Logs logs = Logs('new user', name, '');
+                  await MongoDataBase.addLog(logs);
+
 
                   Navigator.pop(context, user);
                 },

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stable_manager/evenements.dart';
-import 'package:stable_manager/main.dart';
 
 import '../mongodb.dart';
 import '../obj/User.dart';
+import 'homepage.dart';
 import 'profile.dart';
 
 class Cavalier extends StatefulWidget {
@@ -84,7 +84,7 @@ class _MyCavalierState extends State<Cavalier> {
 
                   return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) =>
