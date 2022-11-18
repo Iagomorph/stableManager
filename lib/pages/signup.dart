@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stable_manager/mongodb.dart';
 import 'package:stable_manager/obj/User.dart';
 
+import '../obj/logClass.dart';
+
 
 class Signup extends StatefulWidget {
   static const tag = "signup";
@@ -135,6 +137,8 @@ class _MySignupState extends State<Signup>{
 
 
                     await MongoDataBase.addUser(user);
+                    Logs logs = Logs('Last user: ', name, '');
+                    await MongoDataBase.addLog(logs);
                     Navigator.pop(context, user);
 
                   },

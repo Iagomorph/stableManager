@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../mongodb.dart';
 import '../obj/eventClass.dart';
+import '../obj/logClass.dart';
 
 class EvenementsForm extends StatefulWidget{
   static const tag = "evenementsform";
@@ -58,6 +59,11 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   void _sendNewEvent(){
     Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending',[],[],dureeController.text,adresseController.text,generateRandomToken(10));
     MongoDataBase.addEvent(event);
+  }
+
+  void _sendNewLog() {
+    Logs logs = Logs('Last ' + _eventType, '', nomController.text);
+    MongoDataBase.addLog(logs);
   }
 
   @override
@@ -260,6 +266,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
                         _sendNewEvent();
+                        _sendNewLog();
                         Navigator.pop(context);
                       }
                     },

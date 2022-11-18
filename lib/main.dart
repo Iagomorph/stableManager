@@ -102,6 +102,78 @@ void _onItemTapped(int index){
       appBar :AppBar(
         title: Text(widget.title),
       ),
+
+      body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                FutureBuilder(
+                  future: MongoDataBase.getLog(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    List<Widget> children;
+                    if (snapshot.hasData) {
+                      children = <Widget>[
+                        ListView.builder(
+                          reverse: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              //color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+                              child: Column(
+                                children: <Widget>[
+                                  ListTile(
+                                    title: Text(
+                                      snapshot.data[index].type,
+                                      style: TextStyle(fontSize: 25),
+                                    ),
+                                    subtitle: (snapshot.data[index].user != null)
+                                        ? Text(
+                                      snapshot.data[index].user,
+                                      style: TextStyle(fontSize: 20),
+                                    )
+                                        : (snapshot.data[index].user != null)
+                                        ? Text(
+                                      snapshot.data[index].event,
+                                      style: TextStyle(fontSize: 20),
+                                    )
+                                        : null,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ];
+                    } else if (snapshot.hasError) {
+                      children = <Widget>[
+                        const Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text('Error: ${snapshot.error}'),
+                        ),
+                      ];
+                    } else {
+                      children = const <Widget>[
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ];
+                    }
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: children,
+                    );
+                  },
+                ),
+              ])),
       //FIN DE L'APPBAR MERCI DE METTRE VOTRE CODE SOUS CE MSG ET AU DESSUS DE LA NAVBAR DU BAS
 
 
