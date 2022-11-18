@@ -1,4 +1,8 @@
 import 'dart:developer';
+import 'package:stable_manager/obj/UserManager.dart';
+
+import 'obj/eventClass.dart';
+import 'obj/commentClass.dart';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -11,7 +15,7 @@ class MongoDataBase {
   static DbCollection? collection;
   static DbCollection? eventCollection;
   static DbCollection? horseCollection;
-
+  static DbCollection? commentCollection;
 
   static connect() async {
     var db = await Db.create(MONGO_URL);
@@ -23,6 +27,7 @@ class MongoDataBase {
     collection = db.collection(COLLECTION_NAME);
     eventCollection = db.collection(EVENT_COLLECTION_NAME);
     horseCollection = db.collection(HORSE_COLLECTION);
+    commentCollection = db.collection(COMMENT_COLLECTION_NAME);
   }
 
   static addUser(User user) async {
@@ -106,18 +111,22 @@ class MongoDataBase {
         modify.set('password', password));
   }
 
-
-  static addEvent(type, name, desc, date, img, terrain, discipline,
-      organisateur) async {
+  static addEvent(event) async {
     await eventCollection?.insertOne({
-      'type': type,
-      'name': name,
-      'desc': desc,
-      'date': date,
-      'img': img,
-      'terrain': terrain,
-      'discipline': discipline,
-      'organisateur': organisateur
+      'type':event.type,
+      'name':event.name,
+      'desc':event.desc,
+      'date':event.date,
+      'img':event.img,
+      'terrain':event.terrain,
+      'discipline':event.discipline,
+      'organisateur':event.organisateur,
+      'status':event.status,
+      'participants':[UserManager.user.token],
+      'commentaires':[],
+      'duree':event.duree,
+      'adresse':event.adresse,
+      'token':event.token
     });
 
     print("addEvent appelé.");
@@ -245,13 +254,92 @@ class MongoDataBase {
   );
   }
 
+  static getEvents() async{
+    var events = await eventCollection?.find().toList();
+    List eventsList = [];
+    events?.forEach((item) {
+      String type = item["type"];
+      String name = item["name"];
+      String desc = item["desc"];
+      String date = item["date"];
+      String img = item["img"];
+      String terrain = item["terrain"];
+      String discipline = item["discipline"];
+      String organisateur = item["organisateur"];
+      String status = item["status"];
+      List participants = item["participants"];
+      List commentaires = item["commentaires"];
+      String duree = item["duree"];
+      String adresse = item["adresse"];
+      String token = item["token"];
+
+      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status,participants,commentaires,duree,adresse,token);
+
+      eventsList.add(event);
+    });
+
+    print(eventsList);
+    print(eventsList[0].name);
+    return eventsList;
+  }
+
+  static updateEventStatus(token, status) async{
+    await eventCollection?.updateOne(where.eq('token', token), modify.set('status', status));
+  }
+
+  static addEventParticipant(eventToken, userToken) async{
+    await eventCollection?.updateOne(where.eq('token', eventToken), modify.addToSet('participants', userToken));
+  }
+  static removeEventParticipant(eventToken, userToken) async{
+    await eventCollection?.updateOne(where.eq('token', eventToken).and(where.eq('participants', userToken)), modify.pull('participants', userToken));
+  }
+  static getAllParticipants(eventToken, userToken) async{
+    var collec = await eventCollection?.find(where.eq('token', eventToken)).toList();
+    return(collec?[0]['participants']);
+  }
+
+  static addComment(comment) async {
+    await commentCollection?.insertOne({
+      'eventToken': comment.eventToken,
+      'username': comment.username,
+      'commentToken': comment.commentToken,
+      'message': comment.message
+    });
+
+    print("addComment appelé.");
+    print(comment.username);
+    print(comment.eventToken);
+    print(comment.message);
+    print(comment.commentToken);
+  }
+  static getComments(eventToken) async {
+    var comments = await commentCollection?.find(
+        where.eq('eventToken', eventToken)).toList();
+    List commentsList = [];
+    comments?.forEach((item) {
+      String eventToken = item["eventToken"];
+      String username = item["username"];
+      String commentToken = item["commentToken"];
+      String message = item["message"];
+
+      Comment comment = Comment(username, eventToken, commentToken, message);
+
+      commentsList.add(comment);
+    });
+
+    print('Commentaires vvv');
+    print(commentsList);
+    print(commentsList[0].username);
+    return commentsList;
+  }
+
   //créer un form userUpdate et horse update avec une méthode updateUser/Horse qui prend tout les champs
   //surtout les "Aucun" et replace ces fields avec les values des user/horse passer
   //add le bouton sur les chevaux et le bouton modif profil
   static updateUser(User user) async {
     await collection?.updateOne(where.eq('token',user.token),({'name':user.name, 'mail':user.mail,'type':user.type,'ffe':user.ffe,'age':user.age, 'tel':user.tel }));
   }
-  
+
   static updateHorse(Horse horse, User user) async {
     await horseCollection?.update(where.eq('userId',user.token), ({'photo':horse.image,'name':horse.nom,'age':horse.age,'robe':horse.robe,'race':horse.race,'sexe':horse.sexe,'spec':horse.spec,"userId":horse.userId,"DpUser":horse.DpUser}));
   }

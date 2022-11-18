@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
-import 'package:stable_manager/evenements.dart';
+import 'package:stable_manager/pages/evenements.dart';
 import 'package:stable_manager/pages/profile.dart';
 import 'mongodb.dart';
 
@@ -16,22 +16,7 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-// class CustomRoute<T> extends MaterialPageRoute<T> {
-//   CustomRoute({ WidgetBuilder builder, RouteSettings settings })
-//       : super(builder: builder, settings: settings);
-//
-//   @override
-//   Widget buildTransitions(BuildContext context,
-//       Animation<double> animation,
-//       Animation<double> secondaryAnimation,
-//       Widget child) {
-//       return child;
-//   }
-// }
-
-
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -111,6 +96,7 @@ void _onItemTapped(int index){
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       appBar :AppBar(

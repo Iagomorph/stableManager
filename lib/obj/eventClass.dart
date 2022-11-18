@@ -8,6 +8,11 @@ class Event {
   String discipline = '';
   String organisateur = '';
   String status = '';
+  List participants;
+  List commentaires;
+  String duree = '';
+  String adresse = '';
+  String token = '';
 
   Event(
     this.type,
@@ -18,12 +23,11 @@ class Event {
     this.terrain,
     this.discipline,
     this.organisateur,
-    this.status
+    this.status,
+    this.participants,
+    this.commentaires,
+    this.duree,
+    this.adresse,
+    this.token
   );
-
-  toJson() async {
-    return ({
-
-    });
-  }
 }

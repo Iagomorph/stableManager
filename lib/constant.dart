@@ -2,3 +2,4 @@ const MONGO_URL = "mongodb+srv://Krukmak:NeuYk2ynceB5exs@marieecurie.4ek3rsx.mon
 const COLLECTION_NAME = "users";
 const EVENT_COLLECTION_NAME = "events";
 const HORSE_COLLECTION = "horses";
+const COMMENT_COLLECTION_NAME = "comments";

@@ -3,7 +3,6 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:stable_manager/evenements.dart';
 import 'package:stable_manager/obj/UserManager.dart';
 import 'package:stable_manager/pages/editprofile.dart';
 
@@ -12,6 +11,7 @@ import '../mongodb.dart';
 import '../obj/Horse.dart';
 import '../obj/User.dart';
 import 'cavaliers.dart';
+import 'evenements.dart';
 
 
 
