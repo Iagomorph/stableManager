@@ -40,6 +40,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   final terrainController = TextEditingController();
   final disciplineController = TextEditingController();
   final orgaController = TextEditingController();
+  final dureeController = TextEditingController();
 
   String _eventType = "soiree";
 
@@ -53,7 +54,7 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   }
 
   void _sendNewEvent(){
-    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending',[],[],generateRandomToken(10));
+    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending',[],[],dureeController.text,generateRandomToken(10));
     MongoDataBase.addEvent(event);
   }
 
@@ -179,6 +180,23 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                       return null;
                     },
                     controller: disciplineController,
+                  ),
+                ),
+                Visibility(visible: showCoursField, child: SizedBox(height: 25.0,)),
+                Visibility(
+                  visible: showCoursField,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Duree"
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Veuillez entrer une duree de cours.';
+                      }
+                      return null;
+                    },
+                    controller: dureeController,
                   ),
                 ),
                 Visibility(visible: showCoursField, child: SizedBox(height: 25.0,)),

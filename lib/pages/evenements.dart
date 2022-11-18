@@ -88,6 +88,12 @@ class _MyEventState extends State<Evenements>{
     }else{return false;}
   }
 
+  _cardColor(participants,type){
+    if(_isParticipating(participants) && _coursBool(type)){
+     return Colors.yellow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +165,7 @@ class _MyEventState extends State<Evenements>{
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          //color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+                          color: _cardColor(snapshot.data[index].participants,snapshot.data[index].type),
                           child: Column(
                             children: <Widget>[
                               ListTile(
@@ -187,6 +193,10 @@ class _MyEventState extends State<Evenements>{
                                   Visibility(
                                       visible: _coursBool(snapshot.data[index].type),
                                       child: Text('Discipline: '+snapshot.data[index].discipline, style: TextStyle(fontSize: 15),)
+                                  ),
+                                  Visibility(
+                                      visible: _coursBool(snapshot.data[index].type),
+                                      child: Text('Duree: '+snapshot.data[index].duree, style: TextStyle(fontSize: 15),)
                                   ),
                                   Text('Status: '+snapshot.data[index].status, style: TextStyle(fontSize: 15),),
                                 ],
