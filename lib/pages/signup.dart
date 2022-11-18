@@ -50,7 +50,7 @@ class _MySignupState extends State<Signup>{
               child: Column(
                 children: [
                   //field Username
-                  TextFormField( decoration:
+                  TextFormField( obscureText: true,decoration:
                   const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText:'username',

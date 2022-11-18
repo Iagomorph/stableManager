@@ -69,7 +69,7 @@ class _MyLoginState extends State<Login>{
                 controller: nameController,
               ),
 
-                TextFormField( decoration:
+                TextFormField( obscureText: true,decoration:
                 const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText:'password',
@@ -159,7 +159,7 @@ class _MyLoginState extends State<Login>{
 
                           Text("Nouveau mot de passe :"),
 
-                          TextFormField( decoration:
+                          TextFormField( obscureText: true,decoration:
                           const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText:'mot de passe',
@@ -182,7 +182,10 @@ class _MyLoginState extends State<Login>{
                           if (user.name == username && user.mail == mail){
                             await MongoDataBase.updateUserPassword(user, newPwd);
                             UserManager.user = user;
-                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (_,__,___) => const Login(),
+                              transitionDuration: Duration.zero,
+                            ));
                           } else {
                           }
                           });
