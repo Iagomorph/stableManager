@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stable_manager/evenements.dart';
+import 'package:stable_manager/pages/evenements.dart';
 
 import '../main.dart';
 import 'cavaliers.dart';

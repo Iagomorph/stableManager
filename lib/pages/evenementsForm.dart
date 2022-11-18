@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'mongodb.dart';
-import 'eventClass.dart';
+import '../mongodb.dart';
+import '../obj/eventClass.dart';
 
 class EvenementsForm extends StatefulWidget{
   static const tag = "evenementsform";
@@ -44,11 +44,16 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   String _eventType = "soiree";
 
   bool showCoursField = false;
-  bool showImgField = true;
   bool showOrgaField = true;
 
+  String generateRandomToken(int len){
+    var r = Random();
+    String token = String.fromCharCodes(List.generate(len, (index) => r.nextInt(33) + 89));
+    return token;
+  }
+
   void _sendNewEvent(){
-    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending');
+    Event event = Event(_eventType,nomController.text,descController.text,dateController.text,imgController.text,terrainController.text,disciplineController.text,orgaController.text,'pending',[],[],generateRandomToken(10));
     MongoDataBase.addEvent(event);
   }
 
@@ -61,16 +66,13 @@ class FormNewEvenementState extends State<FormNewEvenement> {
   void checkFieldVisibility(eventType){
     if(eventType == "soiree"){
       showOrgaField = true;
-      showImgField = true;
       showCoursField = false;
     }else if(eventType == "comp"){
-      showImgField = true;
       showCoursField = false;
       showOrgaField = false;
     }else if(eventType == "cours"){
       showCoursField = true;
       showOrgaField = false;
-      showImgField = false;
     };
     _eventType = eventType;
   }
@@ -197,23 +199,20 @@ class FormNewEvenementState extends State<FormNewEvenement> {
                   ),
                 ),
                 Visibility(visible: showOrgaField, child: SizedBox(height: 25.0,)),
-                Visibility(
-                  visible: showImgField,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Illustration du post de l'évènement"
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer un lien valide.';
-                      }
-                      return null;
-                    },
-                    controller: imgController,
+                TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Illustration du post de l'évènement"
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez entrer un lien valide.';
+                    }
+                    return null;
+                  },
+                  controller: imgController,
                 ),
-                Visibility(visible: showImgField, child: SizedBox(height: 25.0,)),
+                SizedBox(height: 25.0,),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(

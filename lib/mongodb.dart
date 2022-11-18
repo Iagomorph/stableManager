@@ -1,5 +1,7 @@
 import 'dart:developer';
-import 'eventClass.dart';
+import 'package:stable_manager/obj/UserManager.dart';
+
+import 'obj/eventClass.dart';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -71,8 +73,6 @@ class MongoDataBase {
         modify.set('password', password));
     }
 
-
-
   static addEvent(event) async {
     await eventCollection?.insertOne({
       'type':event.type,
@@ -84,6 +84,9 @@ class MongoDataBase {
       'discipline':event.discipline,
       'organisateur':event.organisateur,
       'status':event.status,
+      'participants':[UserManager.user.token],
+      'commentaires':[],
+      'token':event.token
     });
 
     print("addEvent appelé.");
@@ -102,8 +105,11 @@ class MongoDataBase {
       String discipline = item["discipline"];
       String organisateur = item["organisateur"];
       String status = item["status"];
+      List participants = item["participants"];
+      List commentaires = item["commentaires"];
+      String token = item["token"];
 
-      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status);
+      Event event = Event(type,name,desc,date,img,terrain,discipline,organisateur,status,participants,commentaires,token);
 
       eventsList.add(event);
     });
@@ -111,5 +117,20 @@ class MongoDataBase {
     print(eventsList);
     print(eventsList[0].name);
     return eventsList;
+  }
+
+  static updateEventStatus(token, status) async{
+    await eventCollection?.updateOne(where.eq('token', token), modify.set('status', status));
+  }
+
+  static addEventParticipant(eventToken, userToken) async{
+    await eventCollection?.updateOne(where.eq('token', eventToken), modify.addToSet('participants', userToken));
+  }
+  static removeEventParticipant(eventToken, userToken) async{
+    await eventCollection?.updateOne(where.eq('token', eventToken).and(where.eq('participants', userToken)), modify.pull('participants', userToken));
+  }
+  static getAllParticipants(eventToken, userToken) async{
+    var collec = await eventCollection?.find(where.eq('token', eventToken)).toList();
+    return(collec?[0]['participants']);
   }
 }
