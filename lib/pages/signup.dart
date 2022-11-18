@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:stable_manager/mongodb.dart';
 import 'package:stable_manager/obj/User.dart';
@@ -116,10 +118,6 @@ class _MySignupState extends State<Signup> {
                   ], onChanged: dropdownCallback,
                     value: _dropDownValue,
                   ),
-
-
-
-                  //Submit Button
                   ElevatedButton(onPressed:() async {
 
                     String name = nameController.text;
@@ -134,8 +132,10 @@ class _MySignupState extends State<Signup> {
 
                     User user = User (name,mail,pwd,img,token,false,type);
 
-
                     await MongoDataBase.addUser(user);
+
+                    Logs logs = Logs('new user', name, '');
+                    await MongoDataBase.addLog(logs);
                     Navigator.pop(context, user);
 
                   },
@@ -144,20 +144,7 @@ class _MySignupState extends State<Signup> {
                   ),
                 ],
               )),
-                  User user = User(name, mail, pwd, img, token, false, type);
-                  await MongoDataBase.addUser(user);
-
-                  Logs logs = Logs('new user', name, '');
-                  await MongoDataBase.addLog(logs);
-
-
-                  Navigator.pop(context, user);
-                },
-                child: const Text("Sign Up"),
-              ),
-            ],
-          )),
-    );
+        );
   }
 
 }

@@ -283,4 +283,7 @@ class MongoDataBase {
     });
     print("addLog appelé");
   }
+  static updateHorse(Horse horse, User user) async {
+    await horseCollection?.update(where.eq('userId',user.token), ({'photo':horse.image,'name':horse.nom,'age':horse.age,'robe':horse.robe,'race':horse.race,'sexe':horse.sexe,'spec':horse.spec,"userId":horse.userId,"DpUser":horse.DpUser}));
+  }
 }
